@@ -1,0 +1,20 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Pokémon diurnos: centralizados */
+.sentret,
+.ledyba {
+    display: flex;
+    justify-content: center;  /* centraliza horizontalmente */
+    align-items: center;      /* centraliza verticalmente, caso necessário */
+}
+
+/* Pokémon noturnos: alinhados à direita */
+.hoothoot,
+.spinarak {
+    display: flex;
+    justify-content: flex-end; /* empurra para a direita */
+    align-items: center;       /* opcional */
+}

@@ -1,0 +1,22 @@
+/* O CSS */
+#garden {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+}
+
+.oddish {
+  background-color: #4cafa5; /* Cor do Oddish */
+  
+  /* --- A RESPOSTA AQUI --- */
+  grid-row: span 2; 
+  /* ----------------------- */
+}
+
+.gloom {
+  background-color: #d65d34;
+}
+
+.vileplume {
+  background-color: #d63434;
+}

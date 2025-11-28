@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index - Sistema Retro</title>
+    <!-- Carregando fonte retrô -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Variáveis de cor */
+        :root {
+            --phosphor-main: #33ff00;
+            --phosphor-dim: #1a8000;
+            --bg-color: #050505;
+            --screen-bg: #0a0a0a;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'VT323', monospace;
+            overflow: hidden;
+            color: var(--phosphor-main);
+        }
+
+        /* Estrutura do Monitor */
+        .monitor-casing {
+            background: #222;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 0 10px #111,
+                0 20px 50px rgba(0,0,0,0.8);
+            width: 95%;
+            max-width: 800px;
+            height: 80vh;
+            position: relative;
+        }
+
+        /* Tela CRT */
+        .crt-screen {
+            background-color: var(--screen-bg);
+            width: 100%;
+            height: 100%;
+            border-radius: 40px / 20px; /* Curvatura leve */
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.9);
+            border: 2px solid #111;
+            padding: 2rem;
+        }
+
+        /* Scrollbar customizada */
+        .crt-screen::-webkit-scrollbar {
+            width: 10px;
+        }
+        .crt-screen::-webkit-scrollbar-track {
+            background: #000;
+        }
+        .crt-screen::-webkit-scrollbar-thumb {
+            background: var(--phosphor-dim);
+            border: 2px solid #000;
+        }
+
+        /* Efeitos Visuais (Scanlines e Flicker) */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            position: absolute;
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+            animation: scrollScanlines 10s linear infinite;
+        }
+
+        .glow-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle, rgba(51, 255, 0, 0.1) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 5;
+            mix-blend-mode: screen;
+        }
+
+        /* Texto com brilho */
+        .text-glow {
+            text-shadow: 0 0 2px var(--phosphor-dim), 0 0 8px var(--phosphor-main);
+        }
+
+        /* Links */
+        .nav-link {
+            display: block;
+            padding: 8px 0;
+            text-decoration: none;
+            color: var(--phosphor-main);
+            border-bottom: 1px dashed var(--phosphor-dim);
+            transition: all 0.1s;
+            font-size: 1.5rem;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background-color: var(--phosphor-main);
+            color: #000;
+            text-shadow: none;
+            padding-left: 10px;
+            font-weight: bold;
+        }
+
+        .nav-link::before {
+            content: ">";
+            margin-right: 10px;
+            opacity: 0;
+        }
+        
+        .nav-link:hover::before {
+            opacity: 1;
+        }
+
+        /* Animação de Boot */
+        #boot-sequence {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--screen-bg);
+            z-index: 20;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Cursor piscando */
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        @keyframes scrollScanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        /* Efeito de desligamento (opcional, mas legal) */
+        @keyframes turn-off {
+            0% { transform: scale(1, 1.3) translate3d(0, 0, 0); filter: brightness(1); opacity: 1; }
+            60% { transform: scale(1, 0.001) translate3d(0, 0, 0); filter: brightness(10); }
+            100% { animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06); transform: scale(0, 0.001) translate3d(0, 0, 0); filter: brightness(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="monitor-casing">
+        <div class="crt-screen relative">
+            <!-- Camadas de Efeito -->
+            <div class="scanlines"></div>
+            <div class="glow-overlay"></div>
+
+            <!-- Tela de Boot (Inicialização) -->
+            <div id="boot-sequence" class="text-glow text-xl">
+                <p>BIOS DATE 01/01/95 14:22:51 VER 1.02</p>
+                <p>CPU: NEC V20, SPEED: 8 MHz</p>
+                <p>640K RAM SYSTEM... OK</p>
+                <br>
+                <p id="loading-text">INICIALIZANDO SISTEMA DE ARQUIVOS...</p>
+                <p class="mt-4"><span id="progress-bar"></span></p>
+            </div>
+
+            <!-- Conteúdo Principal -->
+            <div id="main-content" class="hidden relative z-0 h-full flex flex-col">
+                
+                <!-- Cabeçalho -->
+                <header class="border-b-2 border-[#33ff00] pb-4 mb-6 text-glow">
+                    <div class="flex justify-between items-end">
+                        <h1 class="text-4xl font-bold uppercase">Dev_Master 3000</h1>
+                        <span class="text-sm blink">ONLINE</span>
+                    </div>
+                    <p class="text-lg mt-2 opacity-80">C:\USERS\DEV\EXERCICIOS></p>
+                </header>
+
+                <!-- Lista de Exercícios -->
+                <main class="flex-grow overflow-y-auto pr-2">
+                    <p class="mb-4 text-glow">SELECIONE UM ARQUIVO PARA EXECUTAR:</p>
+                    
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="ex01.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span> 01 - Centralizar na Box
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ex02.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span>  02 - Espaçar Igualmente
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ex03.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span> 03 -  Pokémon na Grama (Alinhamento Vertical)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ex04.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span> 04 - Torre Pokémon (Mudando a Direção)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ex05.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span> 05 - O Gengar Fugitivo! (Alinhamento Individual)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ex06.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span> 06 - Habitat 2x2
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ex07.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span> 07 - O Snorlax Bloqueia a Passagem (Column Span)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ex08.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span> 08 - A Videira do Oddish (Row Span)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ex09.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span> 09 - Alinhamento no Habitat
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ex10.html" class="nav-link">
+                                <span class="mr-4">[DIR]</span> 10 -  Posicionando os Lendários (Posicionamento Específico)
+                            </a>
+                        </li>
+                    </ul>
+                </main>
+
+                <!-- Rodapé -->
+                <footer class="mt-6 pt-4 border-t border-[#33ff00] text-sm text-glow flex justify-between">
+                    <span>MEMORIA LIVRE: 42KB</span>
+                    <span class="blink">_</span>
+                </footer>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Script para simular a inicialização (Boot)
+        document.addEventListener('DOMContentLoaded', () => {
+            const bootScreen = document.getElementById('boot-sequence');
+            const mainContent = document.getElementById('main-content');
+            const progressBar = document.getElementById('progress-bar');
+            const loadingText = document.getElementById('loading-text');
+
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 30) { // 30 blocos
+                    clearInterval(interval);
+                    setTimeout(showMainContent, 500);
+                } else {
+                    width++;
+                    progressBar.innerText = '█'.repeat(width);
+                }
+            }, 50); // Velocidade do loading
+
+            function showMainContent() {
+                loadingText.innerText = "SISTEMA CARREGADO COM SUCESSO.";
+                setTimeout(() => {
+                    bootScreen.classList.add('hidden');
+                    mainContent.classList.remove('hidden');
+                }, 800);
+            }
+            
+            // Efeito sonoro de clique (opcional, mudo por padrão, mas a lógica visual está aqui)
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    // Feedback visual imediato antes de navegar
+                    link.style.backgroundColor = '#fff';
+                    link.style.color = '#000';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

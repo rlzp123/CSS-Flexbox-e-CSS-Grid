@@ -1,0 +1,25 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    gap: 16px;
+    height: 900px;
+}
+
+.item-1 {
+    flex-basis: 100px;
+    align-self: flex-end;
+}
+
+.item-2 {
+    flex-basis: 100px;
+    align-self: flex-start;
+}
+
+.item-3 {
+    flex-basis: 100px;
+    align-self: flex-start;
+}

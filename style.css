@@ -1,0 +1,65 @@
+:root {
+            --gba-purple: #584e96;
+            --gba-purple-dark: #403875;
+            --gba-screen-border: #33333a;
+            --screen-bg: #e0f0e3; /* Cor clássica de LCD esverdeada */
+        }
+
+        body {
+            background-color: #1a1a1a;
+            font-family: 'Press Start 2P', cursive;
+            overflow-x: hidden;
+        }
+
+        /* Padrão de listras para as laterais */
+        .grip-texture {
+            background-image: radial-gradient(#403875 20%, transparent 20%);
+            background-size: 6px 6px;
+        }
+
+        /* Estilização da barra de rolagem dentro da tela */
+        .retro-scrollbar::-webkit-scrollbar {
+            width: 12px;
+        }
+        .retro-scrollbar::-webkit-scrollbar-track {
+            background: #c8dccb;
+        }
+        .retro-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #584e96;
+            border: 2px solid #c8dccb;
+        }
+
+        /* Efeito de Scanline na tela */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        /* Animação de clique nos botões */
+        .btn-push:active {
+            transform: scale(0.90);
+            box-shadow: inset 0px 4px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Seta de seleção no hover do link */
+        .menu-link::before {
+            content: '>';
+            opacity: 0;
+            margin-right: 5px;
+            color: #2d3748;
+        }
+        .menu-link:hover::before {
+            opacity: 1;
+        }
+
+        /* Responsividade para simular o console */
+        .gba-body {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 -10px 20px rgba(0,0,0,0.2);
+        }

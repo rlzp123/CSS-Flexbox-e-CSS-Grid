@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 05 - Gengar Fugitivo</title>
+    <link rel="stylesheet" href="css/ex05.css">
+    
+    <!-- Fonte Retro "VT323" -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --phosphor-main: #33ff00; 
+            --phosphor-dim: #1a8000;
+            --bg-color: #050a05;
+        }
+
+        body {
+            background-color: black;
+            margin: 0;
+            height: 100vh;
+            overflow-y: auto;
+            font-family: 'VT323', monospace;
+            color: var(--phosphor-main);
+            -webkit-font-smoothing: none;
+        }
+
+        /* CRT Effects */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 2px var(--phosphor-dim), 0 0 10px var(--phosphor-main);
+        }
+
+        .terminal-box {
+            border: 2px solid var(--phosphor-main);
+            box-shadow: 0 0 10px var(--phosphor-dim);
+            background: rgba(0, 20, 0, 0.8);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* AQUI ESTÁ A SOLUÇÃO DO EXERCÍCIO */
+        .pokemon-container {
+            display: flex;
+            
+            /* Padrão: Alinha todos no topo */
+            align-items: flex-start; 
+            
+            /* Espaçamento horizontal */
+            justify-content: space-around; 
+            
+            width: 100%;
+            height: 300px; 
+            border: 1px dashed var(--phosphor-dim);
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+        }
+
+        .poke-card {
+            border: 1px solid var(--phosphor-main);
+            padding: 5px;
+            text-align: center;
+            background: #001100;
+            transition: transform 0.2s;
+            width: 100px;
+        }
+        .poke-card:hover {
+            transform: scale(1.1);
+            background: var(--phosphor-dim);
+            color: black;
+            cursor: pointer;
+        }
+        .poke-card img {
+            width: 80px;
+            height: 80px;
+            image-rendering: pixelated;
+        }
+
+        /* Classe específica para o Gengar Fugitivo */
+        .fugitive {
+            /* Sobrescreve o align-items do pai APENAS para este item */
+            align-self: flex-end; 
+            
+            border-color: #ff3333; /* Vermelho para destacar o "erro" no sistema */
+            color: #ff3333;
+        }
+        .fugitive:hover {
+             background: #ff3333;
+             color: black;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--phosphor-main);
+            text-decoration: none;
+            border: 1px solid var(--phosphor-main);
+            padding: 5px 15px;
+        }
+        .back-btn:hover {
+            background: var(--phosphor-main);
+            color: black;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: #aaffaa;
+        }
+        .code-highlight {
+            color: #ff3333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+
+    <div class="container mx-auto p-4 max-w-4xl pt-10 relative z-0">
+        
+        <header class="mb-8 glow-text">
+            <h1 class="text-3xl md:text-4xl border-b border-[var(--phosphor-dim)] pb-2 mb-2">
+                > EXERCÍCIO_05: ALIGN-SELF
+            </h1>
+            <p class="text-lg opacity-80">OBJETIVO: Mover um único item (Gengar) para o fundo.</p>
+        </header>
+
+        <section class="terminal-box">
+            <div class="mb-2 text-sm">:: VISUALIZADOR ::</div>
+            
+            <div class="pokemon-container">
+                <!-- Alakazam (Segue o padrão do pai: Topo) -->
+                <div class="poke-card">
+                    <img src="img/ex05/Alakazam.png" alt="Alakazam">
+                    <div class="text-xs">ALAKAZAM</div>
+                </div>
+
+                <!-- Haunter (Segue o padrão do pai: Topo) -->
+                <div class="poke-card">
+                    <img src="img/ex05/Haunter.png" alt="Haunter">
+                    <div class="text-xs">HAUNTER</div>
+                </div>
+
+                <!-- Gengar (Fugitivo: Vai para o fundo) -->
+                <div class="poke-card fugitive">
+                    <img src="img/ex05/gengar.png" alt="Gengar">
+                    <div class="text-xs">GENGAR</div>
+                </div>
+            </div>
+
+        </section>
+
+       
+            </div>
+        </section>
+
+        <a href="index.html" class="back-btn">< VOLTAR AO SISTEMA</a>
+
+    </div>
+</body>
+</html>
